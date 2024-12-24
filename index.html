@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Domain Tools</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+
+    .container {
+      display: flex;
+      gap: 40px;
+      margin-top: 50px;
+    }
+
+    .tool {
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      width: 400px;
+      box-sizing: border-box;
+      /* Ensure padding and border are included in the width */
+    }
+
+    h1 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+
+    textarea {
+      width: 100%;
+      margin-bottom: 10px;
+      background: #333;
+      color: #e0e0e0;
+      border: 1px solid #555;
+      border-radius: 5px;
+      padding: 10px;
+      box-sizing: border-box;
+      /* Ensure padding and border are included in the width */
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    pre {
+      background: #333;
+      padding: 15px;
+      border-radius: 5px;
+      white-space: pre-wrap;
+      border: 1px solid #555;
+      font-size: 1.1em;
+      max-height: 200px;
+      overflow-y: auto;
+      color: #e0e0e0;
+    }
+
+    .copy-button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .copy-button:hover {
+      background-color: #218838;
+    }
+
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    .notification.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="tool">
+      <h1>Main Domain Sorter</h1>
+      <textarea id="domainInputSorter" rows="10" placeholder="Enter domains, one per line"></textarea>
+      <br>
+      <button onclick="sortAndDisplayDomains()">Sort Domains</button>
+      <h2>Sorted Domains:</h2>
+      <pre id="sortedDomains"></pre>
+      <button class="copy-button" onclick="copyToClipboard('sortedDomains')">Copy</button>
+    </div>
+    <div class="tool">
+      <h1>Main Domain Extractor</h1>
+      <textarea id="domainInputExtractor" rows="10" placeholder="Enter domains, one per line"></textarea>
+      <br>
+      <button onclick="extractAndDisplayMainDomains()">Extract Main Domains</button>
+      <h2>Main Domains:</h2>
+      <pre id="mainDomains"></pre>
+      <button class="copy-button" onclick="copyToClipboard('mainDomains')">Copy</button>
+    </div>
+  </div>
+  <div id="notification" class="notification">Copied to clipboard</div>
+  <script src="sorter.js"></script>
+  <script src="extractMainDomains.js"></script>
+  <script>
+    function copyToClipboard(elementId) {
+      const text = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        showNotification();
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+    }
+
+    function showNotification() {
+      const notification = document.getElementById('notification');
+      notification.classList.add('show');
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 1000);
+    }
+  </script>
+</body>
+
+</html>
